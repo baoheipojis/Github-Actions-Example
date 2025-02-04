@@ -25,7 +25,7 @@ jobs:
           cat output.txt
       # 如果到这里结束，没有问题。但是output.txt的内容不会被保存下来。如果想要持久保存，可以使用Github Artifact
       - name: Upload file as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: output
           path: output.txt
