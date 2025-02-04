@@ -1,10 +1,10 @@
-# .github/workflows/unittest.yml
-name: Unit Test
+# .github/workflows/write_file.yml
+name: Write File
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  write:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,11 +16,10 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install dependencies
+      - name: Run script to write to file
         run: |
-          python -m pip install --upgrade pip
+          python write_file.py
 
-      - name: Run unit tests
+      - name: Show file content
         run: |
-          cd test
-          python -m unittest discover -s . -p 'test_*.py'
+          cat output.txt
