@@ -24,8 +24,16 @@ jobs:
         run: |
           cat output.txt
       # 如果到这里结束，没有问题。但是output.txt的内容不会被保存下来。如果想要持久保存，可以使用Github Artifact
-      - name: Upload file as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: output
-          path: output.txt
+      # - name: Upload file as artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: output
+      #     path: output.txt
+      # 当然，你也可以选择直接push到仓库
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add output.txt
+          git commit -m "Add output.txt"
+          git push
