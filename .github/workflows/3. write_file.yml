@@ -10,7 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        with:
+          persist-credentials: false  # 禁用默认身份验证
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -30,10 +31,22 @@ jobs:
       #     name: output
       #     path: output.txt
       # 当然，你也可以选择直接push到仓库
-      - name: Commit and push changes
+      - name: Set up Git
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Make changes
+        run: echo "Hello, GitHub Actions!" >> output.txt
+
+      - name: Commit changes
+        run: |
           git add output.txt
           git commit -m "Add output.txt"
-          git push
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          git push origin main
