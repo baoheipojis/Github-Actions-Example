@@ -1,0 +1,49 @@
+# .github/workflows/write_date.yml
+name: Write Current Date
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 每天 0 点触发
+
+jobs:
+  write_date:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Run script to write current date to file
+        run: |
+          python write_date.py
+
+      - name: Show file content
+        run: |
+          cat date_log.txt
+
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+
+      - name: Add changes
+        run: |
+          git add date_log.txt
+
+      - name: Commit changes
+        run: |
+          git commit -m "Add current date to date_log.txt" || echo "No changes to commit"
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          git push origin main
