@@ -1,54 +1,55 @@
-# .github/workflows/write_file.yml
-name: Write File
+# # .github/workflows/write_file.yml
+# name: Write File
 
-on: [push, pull_request]
+# on: 
+#   [push, pull_request]
 
-jobs:
-  write:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false  # 禁用默认身份验证
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
+# jobs:
+#   write:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#       id-token: write
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#         with:
+#           persist-credentials: false  # 禁用默认身份验证
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.8'
 
-      - name: Run script to write to file
-        run: |
-          python write_file.py
+#       - name: Run script to write to file
+#         run: |
+#           python write_file.py
 
-      - name: Show file content
-        run: |
-          cat output.txt
-      # 如果到这里结束，没有问题。但是output.txt的内容不会被保存下来。如果想要持久保存，可以使用Github Artifact
-      # - name: Upload file as artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: output
-      #     path: output.txt
-      # 当然，你也可以选择直接push到仓库
-      - name: Set up Git
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
+#       - name: Show file content
+#         run: |
+#           cat output.txt
+#       # 如果到这里结束，没有问题。但是output.txt的内容不会被保存下来。如果想要持久保存，可以使用Github Artifact
+#       # - name: Upload file as artifact
+#       #   uses: actions/upload-artifact@v4
+#       #   with:
+#       #     name: output
+#       #     path: output.txt
+#       # 当然，你也可以选择直接push到仓库
+#       - name: Set up Git
+#         run: |
+#           git config --global user.name "GitHub Actions"
+#           git config --global user.email "github-actions@github.com"
 
-      - name: Make changes
-        run: echo "Hello, GitHub Actions!" >> output.txt
+#       - name: Make changes
+#         run: echo "Hello, GitHub Actions!" >> output.txt
 
-      - name: Commit changes
-        run: |
-          git add output.txt
-          git commit -m "Add output.txt"
+#       - name: Commit changes
+#         run: |
+#           git add output.txt
+#           git commit -m "Add output.txt"
 
-      - name: Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-          git push origin main
+#       - name: Push changes
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: |
+#           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+#           git push origin main
