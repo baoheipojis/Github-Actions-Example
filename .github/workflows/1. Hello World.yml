@@ -1,19 +1,19 @@
-# 输出Hello World
-name: Hello World
+# # 输出Hello World
+# name: Hello World
 
-# 触发条件
-on:
-  push:  # 当代码被推送到仓库时触发
-    branches:
-      - main  # 可以根据需要指定特定的分支（例如 main）
+# # 触发条件
+# on:
+#   push:  # 当代码被推送到仓库时触发
+#     branches:
+#       - main  # 可以根据需要指定特定的分支（例如 main）
 
-jobs:
-  hello-world:
-    runs-on: ubuntu-latest  # 运行环境，这里使用 Ubuntu 虚拟机
+# jobs:
+#   hello-world:
+#     runs-on: ubuntu-latest  # 运行环境，这里使用 Ubuntu 虚拟机
 
-    steps:
-    - name: Checkout code  # 获取代码
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout code  # 获取代码
+#       uses: actions/checkout@v2
 
-    - name: Print Hello, world!  # 执行打印
-      run: echo "Hello, world!"
+#     - name: Print Hello, world!  # 执行打印
+#       run: echo "Hello, world!"
